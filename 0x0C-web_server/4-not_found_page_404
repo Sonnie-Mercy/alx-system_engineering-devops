@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# configuring error 404
 
 # Update package list
 sudo apt-get update

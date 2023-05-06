@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# A bash script configuring nginx
 
 # Install Nginx
 sudo apt-get update
