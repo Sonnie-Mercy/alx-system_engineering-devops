@@ -1,18 +1,45 @@
 #!/usr/bin/env bash
-# configuring error 404
+#configure a custom 404 page
 
-# Update package index
+# updating and installing nginx
 sudo apt-get update
+sudo apt-get -y install nginx
 
-# Install Nginx
-sudo apt-get install -y nginx
+#allows incoming HTTP traffic to the server
+ufw allow 'Nginx HTTP'
+# changing permissions
+chmod -R 755 /var/www
 
-# Create custom 404 page
-echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
+# Hello world
+echo 'Hello World' > /var/www/html/index.html
 
-# Configure Nginx to use custom 404 page
-sudo sed -i 's/#error_page 404/error_page 404/' /etc/nginx/sites-available/default
-sudo sed -i '/error_page 404/a \\t\tlocation = /404.html {\n\t\t\tinternal;\n\t\t}' /etc/nginx/sites-available/default
+#new configuration
+new_config=\
+"server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+               root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+        server_name _;
+        location / {
+                try_files \$uri \$uri/ =404;
+        }
+        error_page 404 /404.html;
+        location  /404.html {
+            internal;
+        }
+        
+        if (\$request_filename ~ redirect_me){
+            rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+        }
+}
+"
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+echo "$new_config" > /etc/nginx/sites-available/default
 
-# Restart Nginx service
-sudo service nginx restart
+if [ "$(pgrep nginx)" -le 0 ];
+then
+    service nginx start
+else
+    service nginx restart
+fi;
