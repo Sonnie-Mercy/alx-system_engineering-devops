@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# finding and fixing what is keeping nginx from port 80
+
+sudo apt-get update
+sudo apt-get install -y nginx
+sudo ufw allow 'Nginx Full'
+sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+sudo sed -i 's/listen \[::\]:80 default_server;/listen [::]:80;/g' /etc/nginx/sites-available/default
+if sudo service nginx status | grep -q "not running"; then
+  sudo service nginx start
+fi
