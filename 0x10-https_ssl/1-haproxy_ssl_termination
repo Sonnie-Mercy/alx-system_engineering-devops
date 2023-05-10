@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# configuring to HAproxy
+
+sudo apt-get install haproxy
+sudo certbot certonly --standalone -d www.sonniemercy.tech
+sleep 3
+cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg
+global
+    daemon
+    maxconn 256
+
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+
+frontend www-https
+    bind *:443 ssl crt /etc/letsencrypt/live/www.sonniemercy.tech/geek.pem
+    reqadd X-Forwarded-Proto:\ https
+    default_backend webservers
+
+backend webservers
+    mode http
+    balance roundrobin
+    server 49116-web-01 52.91.146.63:80 check
+    server 49116-web-02 54.175.25.153:80 check
+EOF
+sudo service haproxy restart
