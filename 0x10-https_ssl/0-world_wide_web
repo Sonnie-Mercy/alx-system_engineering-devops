@@ -6,7 +6,7 @@ disp_subdomain_info ()
 }
 if [ "$2" ]
 then
-    dig_grep_awk "$1" "$2"
+    disp_subdomain_info "$1" "$2"
 else
     disp_subdomain_info "$1" www
     disp_subdomain_info "$1" lb-01
