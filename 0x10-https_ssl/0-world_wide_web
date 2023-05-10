@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# configuring the domain and sub domain
+disp_subdomain_info () {
+local domain="$1"
+local subdomain="$2"
+rec=$(dig +short "$subdomain.$domain" | awk {'print $1'})
+while read -r rec; do
+echo "The subdomain $subdomain is a $rec record and points to $rec."
+done <<< "rec"
+}
+
+domain="sonniemercy.tech"
+subdomains=("www" "100.26.174.173" "52.91.146.63" "54.175.25.153")
