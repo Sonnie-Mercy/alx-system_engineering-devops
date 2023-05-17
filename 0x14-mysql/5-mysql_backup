@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# bash script for backup for mysql
+current_date=$(date +"%d-%m-%Y")
+mysql_password=$1
+dump_file="backup.sql"
+archive_file="${current_date}.tar.gz"
+mysqldump -u root -p${mysql_password} --all-databases > ${dump_file}
+tar -czvf ${archive_file} ${dump_file}
+echo "MySQL dump and compressed archive created successfully."
