@@ -3,18 +3,14 @@
 Script that fetches data from the JSONPlaceholder API.
 """
 import requests
-from sys import argv
+import sys
 
 if __name__ == "__main__":
-    employee_id = argv[1]
-
-    # Retrieve employee details
+    employee_id = sys.argv[1]
     employee_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     employee_resp = requests.get(employee_url)
     employee_data = employee_resp.json()
     emp_name = employee_data.get("name")
-
-    # Retrieve employee TODO list
     t_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
     t_resp = requests.get(t_url)
     t_data = t_resp.json()
