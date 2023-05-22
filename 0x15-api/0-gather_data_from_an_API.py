@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """
-A script that uses REST API to fetch employee TODO list progress.
+A script that uses REST API to fetch employee 
+TODO list progress.
 """
+
 import requests
 from sys import argv
 
