@@ -15,12 +15,12 @@ if __name__ == "__main__":
     emp_name = employee_data.get("name")
 
     # Retrieve employee TODO list
-    todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
-    todos_resp = requests.get(todos_url)
-    todos_data = todos_resp.json()
+    t_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    t_resp = requests.get(t_url)
+    t_data = t_resp.json()
 
-    tasks = len(todos_data)
-    comp = [todo for todo in todos_data if todo.get("completed")]
+    tasks = len(t_data)
+    comp = [todo for todo in t_data if todo.get("completed")]
     num_comp = len(comp)
 
     print(f"Employee {emp_name} is done with tasks({num_comp}/{tasks}):")
