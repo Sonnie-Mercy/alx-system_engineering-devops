@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Script that fetches data from the JSONPlaceholder API.
-"""
+"""Returns to-do list information for a given employee ID."""
 import requests
 import sys
 
