@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-"""A script that uses REST API to fetch employee
-TODO list progress."""
-
-
+"""
+Script that fetches data from the JSONPlaceholder API.
+"""
 import requests
 from sys import argv
 
