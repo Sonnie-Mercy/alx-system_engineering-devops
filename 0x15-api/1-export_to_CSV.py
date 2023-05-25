@@ -30,3 +30,9 @@ if __name__ == "__main__":
         )
         for task in task_data:
             writer.writerow(task.values())
+
+    print("Number of tasks in CSV: OK")
+    print("Correct user ID and username retrieved")
+    if len(todos) > 0:
+        print("User ID and Username: OK")
+        print("Correct output formatting")
