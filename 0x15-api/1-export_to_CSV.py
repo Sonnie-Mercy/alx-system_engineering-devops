@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Python script to export data in the CSV format"""
+import cvs
 import requests
 import sys
-import csv
 
 if __name__ == "__main__":
     """utilizing CVS and REST API"""
