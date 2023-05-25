@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Python script to export data in the CSV format"""
-import cvs
+import csv
 import requests
 import sys
 
@@ -25,7 +25,8 @@ if __name__ == "__main__":
     filename = f"{employee_id}.csv"
     with open(filename, mode="w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow
-        (["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+        writer.writerow(
+                ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
+        )
         for task in task_data:
             writer.writerow(task.values())
