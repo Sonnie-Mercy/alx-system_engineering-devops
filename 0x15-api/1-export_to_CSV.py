@@ -1,26 +1,32 @@
 #!/usr/bin/python3
-"""
-Script that uses REST API for fetching employee TODO progress
-and exports data to CSV.
-"""
-import csv
 import requests
 import sys
+import csv
 
 if __name__ == "__main__":
+    """utilizing CVS and REST API"""
+
     employee_id = sys.argv[1]
-    url = "https://jsonplaceholder.typicode.com/"
-    user_endpoint = "{}users/{}".format(url, employee_id)
-    todo_endpoint = "{}todos".format(url)
+    base_url = "https://jsonplaceholder.typicode.com"
+    response = requests.get(f"{base_url}/todos?userId={employee_id}")
+    if response.status_code != 200:
+        sys.exit(1)
 
-    user = requests.get(user_endpoint).json()
-    todos = requests.get(todo_endpoint, params={"userId": employee_id}).json()
+    todos = response.json()
+    employee_name = todos[0]["name"]
+    task_data = []
+    for todo in todos:
+        task_data.append({
+            "USER_ID": employee_id,
+            "USERNAME": employee_name,
+            "TASK_COMPLETED_STATUS": str(todo["completed"]),
+            "TASK_TITLE": todo["title"]
+        })
 
-    with open('{}.csv'.format(employee_id), 'w', newline='') as csvfile:
-        taskwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-        for task in todos:
-            row = [employee_id,
-                   user.get('username'),
-                   task.get('completed'),
-                   task.get('title')]
-            taskwriter.writerow(row)
+    filename = f"{employee_id}.csv"
+    with open(filename, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow
+        (["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+        for task in task_data:
+            writer.writerow(task.values())
