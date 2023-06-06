@@ -5,7 +5,7 @@ queries the Reddit API and returs the hot articles of a sub
 import requests
 
 
-def recurse(subreddit, hot_list=[]):
+def recurse(subreddit, hot_list=[], after=''):
     """
     The function to use to recursively call to get hot articles in a sub
     """
