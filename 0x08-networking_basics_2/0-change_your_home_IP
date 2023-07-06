@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Configuring hosts
+sed -i 's/127.0.0.1/127.0.0.2/g' /etc/hosts
+# Configure facebook.com to resolve to 8.8.8.8
+sed -i 's/157.240.11.35/8.8.8.8/g' /etc/hosts

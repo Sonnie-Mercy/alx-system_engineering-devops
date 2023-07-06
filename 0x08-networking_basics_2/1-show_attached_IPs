@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# shows all active IPV4s on the machine
+# Get the active network interfaces
+interfaces=$(ifconfig | grep -oP '^[\w@]+(?=:)')
+
+# Iterate over each interface and display its IPv4 addresses
+for interface in $interfaces; do
+  ipv4_addresses=$(ifconfig $interface | grep -oP 'inet \K[\d.]+')
+  echo "IPv4 addresses for interface $interface:"
+  echo "$ipv4_addresses"
+  echo
+done
