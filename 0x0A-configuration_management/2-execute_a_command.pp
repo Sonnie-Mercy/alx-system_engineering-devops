@@ -1,7 +1,7 @@
-# A puppet manifest that kills a process called killmenow
+# This manifest kills a process named "killmenow" using the exec resource and pkill command.
+
 exec { 'kill_killmenow_process':
-  command => 'pkill killmenow',
-  onlyif  => 'pgrep killmenow',
-  path    => '/usr/bin:/usr/sbin:/bin:/sbin',
-  require => Package['procps'],  # Make sure the 'procps' package is installed
+  command => 'pkill -f killmenow',
+  path    => ['/usr/local/bin', '/usr/bin'],
+  onlyif  => 'pgrep -f killmenow',
 }
