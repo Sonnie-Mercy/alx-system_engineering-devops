@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# script thaat at transfers files files from client to server
+
+# Display usage message if less than 4 parameters are provided
+ssh ubuntu@100.25.138.158 -i school 'ls ~/'
+if [ $# -lt 4 ]; then
+    echo "Usage: $0 PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+    exit 1
+fi
+# transfer the files using scp
+path_to_file="$1"
+server_ip="$2"
+username="$3"
+path_to_ssh_key="$4"
+scp -o StrictHostKeyChecking=no -i "$path_to_ssh_key" "$path_to_file" "$username@$server_ip:~/"
+ssh ubuntu@100.25.138.158 -i school 'ls ~/'
