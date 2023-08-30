@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+# using puppet
 file { '/root/.ssh/config':
   ensure  => file,
   owner   => 'root',
