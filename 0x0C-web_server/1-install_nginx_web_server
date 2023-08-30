@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Install and start Nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+sudo ufw allow 'Nginx HTTP'
+sudo service nginx start
+# Create a basic HTML file with the "Hello World!" message
+sudo echo "Hello World!" > /var/www/html/index.html
+# restart Nginx
+sudo service nginx restart
+sudo service nginx reload
