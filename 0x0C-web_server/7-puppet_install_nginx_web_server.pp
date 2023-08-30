@@ -1,3 +1,4 @@
+# A script doing everything in puppet instead of bash
 package { 'nginx':
   ensure => 'installed',
 }
