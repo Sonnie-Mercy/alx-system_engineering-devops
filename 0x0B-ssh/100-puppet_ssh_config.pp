@@ -6,7 +6,7 @@ file { '/root/.ssh/config':
   group   => 'root',
   mode    => '0600',
   content => "
-Host ubuntu@100.25.138.158
+Host *
     IdentityFile /root/.ssh/school
     PasswordAuthentication no
   ",
