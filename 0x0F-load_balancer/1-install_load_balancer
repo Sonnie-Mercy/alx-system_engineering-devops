@@ -1,0 +1,24 @@
+s script installs and configures HAProxy on an Ubuntu machine.
+
+# Update the package list and upgrade installed packages
+sudo apt-get update
+sudo apt-get upgrade -y
+
+# Install HAProxy
+sudo apt-get install -y haproxy
+
+# Configure HAProxy to distribute traffic to web-01 and web-02 using round-robin
+echo "frontend myfrontend
+    bind *:80
+    mode http
+    default_backend mybackend
+
+backend mybackend
+    mode http
+    balance roundrobin
+    server 49116-web-01 100.25.138.158:80 check
+    server 49116-web-02 18.214.87.67:80 check" | sudo tee /etc/haproxy/haproxy.cfg
+sudo service haproxy enable
+
+# Start HAProxy service
+sudo service haproxy start

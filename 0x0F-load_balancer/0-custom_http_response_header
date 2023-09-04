@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# This script configures Nginx to include a custom HTTP response header on an Ubuntu machine.
+
+# Update the package list and upgrade installed packages
+sudo apt-get update
+sudo apt-get upgrade -y
+
+# Install Nginx if not already installed
+sudo apt-get install -y nginx
+sudo ufw allow 'Nginx HTTP'
+sudo service nginx start
+
+# Define the custom header value (hostname)
+HEADER_VALUE=$(hostname)
+
+# Create a custom Nginx configuration file
+echo "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+
+    # Custom HTTP response header
+    add_header X-Served-By $HEADER_VALUE;
+
+}" | sudo tee /etc/nginx/sites-available/custom_header
+
+# Create a symbolic link to enable the custom configuration
+sudo ln -s /etc/nginx/sites-available/custom_header /etc/nginx/sites-enabled/
+
+# Remove the default Nginx default configuration (if needed)
+sudo rm /etc/nginx/sites-enabled/default
+
+# Test Nginx configuration
+sudo nginx -t
+
+# Reload Nginx to apply the new configuration
+sudo service nginx restart
+sudo service nginx reload
