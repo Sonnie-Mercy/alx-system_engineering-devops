@@ -1,4 +1,4 @@
-s script installs and configures HAProxy on an Ubuntu machine.
+# script installs and configures HAProxy on an Ubuntu machine.
 
 # Update the package list and upgrade installed packages
 sudo apt-get update
