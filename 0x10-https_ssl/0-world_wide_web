@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# This script displays DNS information for subdomains.
+
+# Function to display DNS information for a subdomain
+display_dns_info() {
+    local subdomain="$1"
+    local domain="$2"
+    
+    # Use dig to fetch DNS information for the subdomain
+    DNS_INFO=$(dig +short "$subdomain.$domain")
+
+    # Determine the DNS record type
+    RECORD_TYPE=$(echo "$DNS_INFO" | awk '{print $1}')
+    
+    # Determine the destination IP address
+    DESTINATION=$(echo "$DNS_INFO" | awk '{print $2}')
+
+    # Display the information
+    echo "The subdomain $subdomain is a $RECORD_TYPE record and points to $DESTINATION"
+}
+
+# Check for mandatory domain argument
+if [ -z "$1" ]; then
+    echo "Error: Please provide a domain name."
+    exit 1
+fi
+
+# Get the domain name from the first argument
+DOMAIN="$1"
+
+# Check for subdomain argument
+if [ -n "$2" ]; then
+    # Display information for the specified subdomain
+    SUBDOMAIN="$2"
+    display_dns_info "$SUBDOMAIN" "$DOMAIN"
+else
+    # Display information for default subdomains in the specified order
+    DEFAULT_SUBDOMAINS=("www" "lb-01" "web-01" "web-02")
+    for subdomain in "${DEFAULT_SUBDOMAINS[@]}"; do
+        display_dns_info "$subdomain" "$DOMAIN"
+    done
+fi
