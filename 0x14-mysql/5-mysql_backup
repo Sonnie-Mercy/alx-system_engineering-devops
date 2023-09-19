@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 # generating a tar.gz file
 mysql_password="$1"
 date_format=$(date +"%d-%m-%Y")
