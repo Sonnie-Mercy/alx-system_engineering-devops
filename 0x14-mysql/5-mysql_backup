@@ -1,0 +1,10 @@
+#!/bin/env bash
+# generating a tar.gz file
+mysql_password="$1"
+date_format=$(date +"%d-%m-%Y")
+mysql_dump_file="backup.sql"
+archive_file="$date_format.tar.gz"
+mysqldump -u root -p"$mysql_password" --all-databases > "$mysql_dump_file"
+tar -czvf "$archive_file" "$mysql_dump_file"
+rm "$mysql_dump_file"
+exit 0
