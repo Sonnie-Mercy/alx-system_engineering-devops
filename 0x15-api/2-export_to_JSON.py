@@ -10,7 +10,7 @@ if __name__ == "__main__":
     url = "https://jsonplaceholder.typicode.com/"
     u = requests.get(url + "users/{}".format(userId)).json()
     uname = u.get("username")
-    task = request.get(url + "todos", params={"userId": userId}).json()
+    task = requests.get(url + "todos", params={"userId": userId}).json()
 
     with open("{}.json".format(userId), "w") as jsonfile:
         json.dump({userId: [{
