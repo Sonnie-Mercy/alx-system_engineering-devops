@@ -22,7 +22,7 @@ def count_words(subreddit, word_list, after=None, word_count={}):
     """
     headers = {'User-Agent': 'MyBot/0.0.1'}
     params = {'limit': 100, 'after': after}
-    url = f'https://www.reddit.com/r/{subreddit}/hot.json'
+    url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
     response = requests.get(url, headers=headers, params=params,
                             allow_redirects=False)
 
@@ -35,11 +35,9 @@ def count_words(subreddit, word_list, after=None, word_count={}):
                     word_lower = word.lower()
                     if word_lower in title_words:
                         if word_lower in word_count:
-                            word_count[word_lower] +=
-                            title_words.count(word_lower)
+                            word_count[word_lower] += title_words.count(word_lower)
                         else:
-                            word_count[word_lower] =
-                            title_words.count(word_lower)
+                            word_count[word_lower] = title_words.count(word_lower)
             after = response.json().get('data', {}).get('after', None)
             if after is not None:
                 count_words(subreddit, word_list, after, word_count)
@@ -47,7 +45,7 @@ def count_words(subreddit, word_list, after=None, word_count={}):
                 sorted_words = sorted(word_count.items(),
                                       key=lambda x: (-x[1], x[0]))
                 for word, count in sorted_words:
-                    print(f"{word}: {count}")
+                    print("{}: {}".format(word, count))
         else:
             return None
     else:
@@ -57,8 +55,8 @@ def count_words(subreddit, word_list, after=None, word_count={}):
 if __name__ == '__main__':
     import sys
     if len(sys.argv) < 3:
-        print("Please pass an
-              argument for the subreddit and a list of keywords to search.")
+        print("Please pass an "
+              "argument for the subreddit and a list of keywords to search.")
     else:
         word_list = sys.argv[2:]
         count_words(sys.argv[1], word_list)
