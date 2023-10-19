@@ -1,0 +1,13 @@
+server {
+    listen 80;
+    server_name 54.146.69.26;
+
+    location / {
+        proxy_pass http://localhost:5003;
+        include /etc/nginx/proxy_params;
+    }
+
+    location /static/ {
+        alias /path/to/your/AirBnB_clone_v4/web_dynamic/static/;
+    }
+}
