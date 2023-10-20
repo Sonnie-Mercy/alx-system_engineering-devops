@@ -3,8 +3,7 @@
 # Modify the default file to increase ULIMIT
 file { '/etc/default/nginx':
   ensure  => file,
-  replace => '15',
-  with    => '4096',
+  content => "ulimit -n 4096",
 }
 
 # Notify the service to restart on file change
